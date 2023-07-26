@@ -1,0 +1,41 @@
+c++ code for above question.
+
+#include <iostream>
+#include <vector>
+
+void printPrimesInRange(int start, int end) {
+    // Create a boolean vector to mark numbers as prime or not.
+    std::vector<bool> isPrime(end + 1, true);
+
+    // Mark 0 and 1 as non-prime.
+    isPrime[0] = isPrime[1] = false;
+
+    // Sieve of Eratosthenes algorithm.
+    for (int i = 2; i * i <= end; ++i) {
+        if (isPrime[i]) {
+            // Mark all multiples of the current prime as non-prime.
+            for (int j = i * i; j <= end; j += i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+
+    // Print prime numbers in the specified range.
+    for (int i = std::max(2, start); i <= end; ++i) {
+        if (isPrime[i]) {
+            std::cout << i << " ";
+        }
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int start, end;
+    std::cout << "Enter the range (start end): ";
+    std::cin >> start >> end;
+
+    std::cout << "Prime numbers in the range " << start << " to " << end << " are: ";
+    printPrimesInRange(start, end);
+
+    return 0;
+}
